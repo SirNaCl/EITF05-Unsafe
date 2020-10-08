@@ -16,28 +16,18 @@ if(isset($_SESSION["cart_items"])){
   $cart = [];
 }
 
-// Prepare a select statement
-$sql = "SELECT name, price FROM products WHERE id = ?";
-
 foreach ($cart as $item){
-  $stmt = mysqli_prepare($prodlink, $sql);
-  mysqli_stmt_bind_param($stmt, "s", $param_pid);
-  $param_pid = $item;
-  // Attempt to execute the prepared statement
-  if(mysqli_stmt_execute($stmt)){
-      /* store result */
-      $res = mysqli_stmt_get_result($stmt);
-      foreach (mysqli_fetch_all($res) as $product) {
-        $totalcost += $product[1];
+    $sql = "SELECT name," . " price FROM products WHERE id = \"" . strval($item) . "\"";
+    if ($result = mysqli_query($prodlink, $sql)) {
+        $product = mysqli_fetch_all($result)[0];
         $items[] = new Product($product[0], $product[1]);
-      }
-
-
-  }else{
-      echo "Oops! Something went wrong. Please try again later.";
-  }
+        $totalcost += $product[1];
+        // Free result set
+        mysqli_free_result($result);
+    }else{
+        echo mysqli_error($prodlink);
+    }
 }
-
 
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -51,7 +41,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
   header("Location: orderconfirm.php");
   exit();
 }
-
 
 
 ?>
