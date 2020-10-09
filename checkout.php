@@ -38,7 +38,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       $_SESSION["email"] = trim($_POST["email"]);
 
   }
-  header("Location: orderconfirm.php");
+  header("Location: payment.php");
   exit();
 }
 
