@@ -5,7 +5,7 @@
 session_start();
 
 if(isset($_SESSION["loggedin"])&& isset($_SESSION["username"])){
-    $url = 'http://localhost/EITF05/login/change-pwd.php';
+    $url = 'http://localhost/EITF05-unsafe/login/change-pwd.php';
     $data = array('password' => 'hejhej', 'confirm_password' => 'hejhej');
 
     // use key 'http' even if you send the request to https://...
