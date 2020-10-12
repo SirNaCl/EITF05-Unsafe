@@ -85,8 +85,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate password
     if(empty(trim($_POST["password"]))){
         $password_err = "Please enter a password.";
-    } elseif(strlen(trim($_POST["password"])) < 6){
-        $password_err = "Password must have at least 6 characters.";
+    } elseif(!preg_match('/\A(?=[\x20-\x7E]*?[A-Z])(?=[\x20-\x7E]*?[a-z])(?=[\x20-\x7E]*?[0-9])[\x20-\x7E]{6,}\z/', ($_POST["password"]))) {
+        $password_err = "Password must contain at least: 8 characters, one upper case letter, one lower case letter, and one number.";;
     } else{
         // Prepare a select statement
         $sql = "SELECT password FROM password_blacklist WHERE password = ?";
